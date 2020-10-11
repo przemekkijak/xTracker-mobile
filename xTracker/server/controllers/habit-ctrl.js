@@ -81,7 +81,6 @@ updateHabit = async (req, res) => {
 }
 
 getHabits = async(req, res) => {
-    console.log('Trying to get habits for ' + req.body.usrID);
     await Habit.find({creatorID: req.body.userID}, (err, habits) => {
         if (err) {
             return res.status(200).json({success: false, error: err})

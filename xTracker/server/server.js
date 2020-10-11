@@ -8,8 +8,6 @@ const db = require('./db/index');
 const habitRouter = require('./routes/habit-router');
 const userRouter = require('./routes/user-router');
 
-const path = require('path');
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());

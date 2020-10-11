@@ -11,26 +11,26 @@ export default function App() {
 
   useEffect(() => {
 
-    fetch('http://192.168.0.227:2999/habits/getHabits', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({userID: user.id}),
-    })
-    .then((res) => res.json())
-    .then((encoded) => {
-      setHabits(encoded.habits)
-    })
-    .catch((error) => console.log(error));
+    if(user.id) {
+      fetch('http://192.168.0.227:2999/habits/getHabits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify({userID: user.id}),
+      })
+      .then((res) => res.json())
+      .then((encoded) => setHabits(encoded.habits))
+      .catch((error) => console.log(error));
+    }
   }, [user]);
 
   const generateHabits = () => {
     let habitsElements = [];
     if(habits.length) {
       for(let i = 0; i<habits.length; i++) {
-        habitsElements.push(<HabitElement key={i} text={habits[i].name}/>)
+        habitsElements.push(<HabitElement key={i} habit={habits[i]}/>)
       }
     }
     return habitsElements;
