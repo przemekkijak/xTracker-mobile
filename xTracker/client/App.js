@@ -1,9 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 // components
-import HabitElement from './compnents/habits/habitElement';
+import WeekHabits from './compnents/habits/periods/Week/WeekHabits';
 
 export default function App() {
   const [habits, setHabits] = useState([]);
@@ -26,19 +25,9 @@ export default function App() {
     }
   }, [user]);
 
-  const generateHabits = () => {
-    let habitsElements = [];
-    if(habits.length) {
-      for(let i = 0; i<habits.length; i++) {
-        habitsElements.push(<HabitElement key={i} habit={habits[i]}/>)
-      }
-    }
-    return habitsElements;
-  }
-
   return (
     <View style={styles.container}>
-      {generateHabits()}
+      {<WeekHabits habits={habits}/>}
     </View>
   );
 }
