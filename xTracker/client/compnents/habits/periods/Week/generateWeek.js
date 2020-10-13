@@ -7,7 +7,7 @@ const GenerateWeek = ({habit}) => {
             var today = new Date();
             today.setDate(today.getDate()-i);
             if(habit.progress.includes(today.toISOString().split('T')[0])) {
-                weekDays.push(<Text key={i} style={[styles.weekday, {color: habit.color}]}>y</Text>);
+                weekDays.push(<Text key={i} style={[styles.weekday, {color: habit.color}]}>✓</Text>);
             } else {
                 weekDays.push(<Text key={i} style={[styles.weekday,  {color: "#BDBDBD"}]}>x</Text>)
             }
@@ -18,7 +18,7 @@ const GenerateWeek = ({habit}) => {
 const styles = StyleSheet.create({
     weekday: {
         fontWeight: 'bold',
-        margin: '2%',
+        padding: '2.1%',
     }
 })
 

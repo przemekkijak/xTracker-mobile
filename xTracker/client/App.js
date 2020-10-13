@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 // components
 import WeekHabits from './compnents/habits/periods/Week/WeekHabits';
+import Blob from './compnents/Blob';
 
 export default function App() {
   const [habits, setHabits] = useState([]);
@@ -27,7 +28,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {<WeekHabits habits={habits}/>}
+      <View style={styles.blob}>
+        <Blob style={styles.blob}/>
+      </View>
+      <WeekHabits habits={habits}/>
     </View>
   );
 }
@@ -38,5 +42,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  blob: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
   }
 });
