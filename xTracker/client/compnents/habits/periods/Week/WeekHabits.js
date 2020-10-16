@@ -25,6 +25,7 @@ const WeekHabits = ({habits, setHabits}) => {
         return `#${rr}${gg}${bb}`
       }
       
+
     const CompleteHabit = (habit, index) => {
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
             method: 'PUT',
@@ -59,8 +60,8 @@ const WeekHabits = ({habits, setHabits}) => {
                         <View style={styles.weekdaysContainer}>
                             <GenerateWeek habit={habits[i]}/>
                         </View>
-                        <TouchableOpacity onPress={(habit, index) => CompleteHabit(habits[i], i)}>
-                            <Text>Done</Text>
+                        <TouchableOpacity onPress={() => CompleteHabit(habits[i], i)} style={styles.completeContainer}>
+                            <Text style={styles.completeText}>Done</Text>
                         </TouchableOpacity>
                     </View>
                 )
@@ -114,12 +115,12 @@ const styles = StyleSheet.create({
     tabHeader: {
         top: '2%',
         justifyContent: 'center',
-        left: '10%',
+        left: '6%',
         flexDirection: 'row',
     },
     headerDate: {
         fontSize: 10,
-        padding: '1%',
+        padding: '1.4%',
         textAlign: 'center',
     },
     todayHeaderBox: {
@@ -146,10 +147,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     weekdaysContainer: {
-        marginRight: '9%',
+        marginRight: '4%',
         justifyContent: 'center',
         flexDirection: 'row',
     },
+    completeContainer: {
+        padding: 0.2,
+        marginRight: '3%',
+        backgroundColor: '#537A8F',
+        borderRadius: 2,
+    },
+    completeText: {
+        padding: '2%',
+        color: 'white',
+    }
 })
 
 export default WeekHabits;
