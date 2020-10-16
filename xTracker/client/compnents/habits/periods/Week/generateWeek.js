@@ -18,7 +18,7 @@ const GenerateWeek = ({habit}) => {
 const styles = StyleSheet.create({
     weekday: {
         fontWeight: 'bold',
-        padding: '2.1%',
+        padding: '2.4%',
     }
 })
 

@@ -111,7 +111,7 @@ completeHabit = async(req,res) => {
         if(!habit.progress.includes(todayDate)) {
             habit.progress.push(todayDate);
             habit.save()
-            .then((res) => {
+            .then(() => {
                 return res.status(200).json({
                     message: 'Habit completed',
                 })
