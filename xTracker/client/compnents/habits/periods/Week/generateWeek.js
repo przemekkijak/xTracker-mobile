@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 const GenerateWeek = ({habit}) => {
         let weekDays = [];
@@ -17,9 +18,9 @@ const GenerateWeek = ({habit}) => {
 
 const styles = StyleSheet.create({
     weekday: {
-        fontSize: 15,
+        fontSize: RFValue(15),
         fontWeight: 'bold',
-        padding: '2.4%',
+        padding: '2%',
     }
 })
 

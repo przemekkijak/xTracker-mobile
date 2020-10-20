@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#FFF',
         fontSize: 18,
-        fontWeight: 'bold',
     },
     blob: {
         zIndex: -3,

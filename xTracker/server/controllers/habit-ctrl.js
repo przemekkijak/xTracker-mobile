@@ -113,7 +113,20 @@ completeHabit = async(req,res) => {
             habit.save()
             .then(() => {
                 return res.status(200).json({
+                    habit: 'done',
                     message: 'Habit completed',
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        } else {
+            habit.progress.pop();
+            habit.save()
+            .then(() => {
+                return res.status(200).json({
+                    habit: 'undo',
+                    message: 'Habit undone',
                 })
             })
             .catch((error) => {

@@ -1,31 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 import GenerateWeek from './GenerateWeek.js';
 import Check from '../../../../assets/Check.svg';
 
 const WeekHabits = ({habits, setHabits}) => {
-
-    // not mine, stole it from stackoverflow - working good :D Needed it to lighten habit color for circle progress bar 
-    const colorShade = (col, amt) => {
-        col = col.replace(/^#/, '')
-        if (col.length === 3) col = col[0] + col[0] + col[1] + col[1] + col[2] + col[2]
-      
-        let [r, g, b] = col.match(/.{2}/g);
-        ([r, g, b] = [parseInt(r, 16) + amt, parseInt(g, 16) + amt, parseInt(b, 16) + amt])
-      
-        r = Math.max(Math.min(255, r), 0).toString(16)
-        g = Math.max(Math.min(255, g), 0).toString(16)
-        b = Math.max(Math.min(255, b), 0).toString(16)
-      
-        const rr = (r.length < 2 ? '0' : '') + r
-        const gg = (g.length < 2 ? '0' : '') + g
-        const bb = (b.length < 2 ? '0' : '') + b
-      
-        return `#${rr}${gg}${bb}`
-      }
-      
 
     const CompleteHabit = (habit, index) => {
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
@@ -36,24 +17,26 @@ const WeekHabits = ({habits, setHabits}) => {
             },
             body: JSON.stringify({id: habit._id}),
         })
+        .then((res) => res.json())
         .then((res) => {
-            console.log(res.status);
-            console.log('habit complete');
-            if(res.status === 200) {
                 let todayDate = new Date().toISOString().split('T')[0];
                 let tempHabits = [...habits];
-                tempHabits[index].progress.push(todayDate);
+                if(res.habit === "done") {
+                    tempHabits[index].progress.push(todayDate);
+                } else if(res.habit === "undo") {
+                    tempHabits[index].progress.pop();
+                }
                 setHabits(tempHabits);
-            }
         })
-        .catch((error) => console.log(error));    }
+        .catch((error) => console.log(error));    
+    }
 
     // Create Habit Row in week list, with circle progress bar, name and week progress (separated component)
     const generateHabits = () => {
         let habitsElements = [];
         if(habits.length) {
             for(let i = 0; i<habits.length; i++) {
-                let habitProgress = habits[i].duration / habits[i].progress.length;
+                let habitProgress = (habits[i].progress.length / habits[i].duration) * 100;
                 habitsElements.push(
                     <View style={styles.habitContainer} key={habits[i]._id}>
                         <AnimatedCircularProgress style={styles.circleProgress} size={27} width={6} fill={habitProgress} tintColor={habits[i].color} backgroundColor="#DFDCDC"/>
@@ -106,13 +89,14 @@ const styles = StyleSheet.create({
         flex: 2,
         left: '20%',
         textAlign: 'left',
-        fontSize: 17,
+        fontSize: RFValue(15),
         fontWeight: 'bold',
     },
     weekdaysContainer: {
         marginRight: '10%',
         justifyContent: 'center',
         flexDirection: 'row',
+        marginLeft: '5%',
     },
     completeContainer: {
         padding: 0.2,
