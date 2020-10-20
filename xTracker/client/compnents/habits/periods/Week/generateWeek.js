@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const GenerateWeek = ({habit}) => {
         let weekDays = [];
-        for(let i = 6; i>=0; i--) {
+        for(let i = 4; i>=0; i--) {
             var today = new Date();
             today.setDate(today.getDate()-i);
             if(habit.progress.includes(today.toISOString().split('T')[0])) {
@@ -17,6 +17,7 @@ const GenerateWeek = ({habit}) => {
 
 const styles = StyleSheet.create({
     weekday: {
+        fontSize: 15,
         fontWeight: 'bold',
         padding: '2.4%',
     }

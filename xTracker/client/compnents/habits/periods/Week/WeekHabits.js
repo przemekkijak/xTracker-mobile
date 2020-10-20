@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import GenerateWeek from './GenerateWeek.js';
+import Check from '../../../../assets/Check.svg';
 
 const WeekHabits = ({habits, setHabits}) => {
 
@@ -55,13 +56,15 @@ const WeekHabits = ({habits, setHabits}) => {
                 let habitProgress = habits[i].duration / habits[i].progress.length;
                 habitsElements.push(
                     <View style={styles.habitContainer} key={habits[i]._id}>
-                        <AnimatedCircularProgress style={styles.circleProgress} size={30} width={6} fill={habitProgress} tintColor={habits[i].color} backgroundColor={colorShade(habits[i].color, 80)}/>
-                        <Text style={[styles.habitName, {color: habits[i].color}]}>{habits[i].name}</Text>
+                        <AnimatedCircularProgress style={styles.circleProgress} size={27} width={6} fill={habitProgress} tintColor={habits[i].color} backgroundColor="#DFDCDC"/>
+                        <Text style={styles.habitName}>{habits[i].name}</Text>
                         <View style={styles.weekdaysContainer}>
                             <GenerateWeek habit={habits[i]}/>
                         </View>
                         <TouchableOpacity onPress={() => CompleteHabit(habits[i], i)} style={styles.completeContainer}>
-                            <Text style={styles.completeText}>Done</Text>
+                            {!habits[i].progress.includes(new Date().toISOString().split('T')[0]) 
+                            ? <Check width={20} height={20} fill="#DFDCDC"/>
+                            : <Check width={20} height={20} fill="#DF6367"/>}
                         </TouchableOpacity>
                     </View>
                 )
@@ -70,38 +73,9 @@ const WeekHabits = ({habits, setHabits}) => {
     return habitsElements;
     } 
 
-    // Dates in format (MON - 09) 
-    const headerDates = () => {
-        let dates = [];
-        let today = new Date();
-        for(let i = 6; i>=0; i--) {
-            let date = new Date();
-            date.setDate(date.getDate() - i);
-            // If it's today date - make it bold and add colored background
-            if(today.getDate() === date.getDate()) {
-                dates.push(
-                    <View key={i} style={styles.todayHeaderBox}>
-                        <Text style={[styles.headerDate, {color: 'white'}, {fontWeight: 'bold'}]}>
-                        {date.toLocaleString('en-us', {weekday:'long'}).slice(0,3)}{'\n'}
-                        {date.toISOString().split('T')[0].slice(8,10)}
-                        </Text>
-                    </View>)
-            } else {
-                dates.push(
-                    <Text key={i} style={[styles.headerDate, {color: "#BDBDBD"}]}>
-                        {date.toLocaleString('en-us', {weekday:'long'}).slice(0,3)}{'\n'}
-                        {date.toISOString().split('T')[0].slice(8,10)}
-                    </Text>)
-            }
-        }
-        return dates;
-    }
 
     return (
         <View style={styles.container}>
-            <View style={styles.tabHeader}>
-                {headerDates()}
-            </View>
             {generateHabits()}
         </View>
     )
@@ -109,58 +83,42 @@ const WeekHabits = ({habits, setHabits}) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '95%',
+        width: '90%',
         top: '25%',
     },  
-    tabHeader: {
-        top: '2%',
-        justifyContent: 'center',
-        left: '6%',
-        flexDirection: 'row',
-    },
-    headerDate: {
-        fontSize: 10,
-        padding: '1.4%',
-        textAlign: 'center',
-    },
-    todayHeaderBox: {
-        backgroundColor: '#537A8F',
-        borderRadius: 5,
-    },  
     habitContainer: {
+        borderRadius: 35,
+        borderColor: '#CED5D9',
+        borderWidth: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor: '#fff',
         flexDirection: 'row',
         width: '100%',
         height: '12%',
-        marginTop: '4%',
+        marginTop: '5%',
+        padding: 3,
     },
     circleProgress: {
-        paddingLeft: '3%',
+        marginLeft: 15,
     },
     habitName: {
+        color: '#4B6773',
         flex: 2,
         left: '20%',
         textAlign: 'left',
-        fontSize: 19,
+        fontSize: 17,
         fontWeight: 'bold',
     },
     weekdaysContainer: {
-        marginRight: '4%',
+        marginRight: '10%',
         justifyContent: 'center',
         flexDirection: 'row',
     },
     completeContainer: {
         padding: 0.2,
-        marginRight: '3%',
-        backgroundColor: '#537A8F',
-        borderRadius: 2,
+        marginRight: '8%',
     },
-    completeText: {
-        padding: '2%',
-        color: 'white',
-    }
 })
 
 export default WeekHabits;

@@ -30,7 +30,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.blob}>
-        <Blob width={"100%"} height={"50%"}/>
+        <Blob width={"100%"} height={"700"}/>
       </View>
       <WeekHabits habits={habits} setHabits={setHabits}/>
     </View>
