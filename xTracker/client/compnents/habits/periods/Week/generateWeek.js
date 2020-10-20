@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     weekday: {
         fontSize: RFValue(15),
         fontWeight: 'bold',
-        padding: '2%',
     }
 })
 

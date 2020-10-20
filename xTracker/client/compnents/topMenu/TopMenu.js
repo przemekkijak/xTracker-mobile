@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 import Blob from '../../assets/Blob.svg';
 
@@ -36,7 +37,8 @@ const styles = StyleSheet.create({
     },  
     buttonText: {
         color: '#FFF',
-        fontSize: 18,
+        fontWeight: 'bold',
+        fontSize: RFPercentage(2.5),
     },
     blob: {
         zIndex: -3,
