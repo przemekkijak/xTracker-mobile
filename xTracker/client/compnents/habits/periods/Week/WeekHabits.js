@@ -84,7 +84,6 @@ const WeekHabits = ({habits, setHabits}) => {
 const styles = StyleSheet.create({
     container: {
         width: '90%',
-        top: '25%',
     },  
     habitContainer: {
         borderRadius: 35,

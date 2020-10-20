@@ -2,9 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 // components
-import WeekHabits from './compnents/habits/periods/Week/WeekHabits';
-// import Blob from './compnents/Blob';
-import Blob from './assets/Blob.svg';
+import WeekHabits from './compnents/habits/periods/Week/WeekHabits.js';
+import TopMenu from './compnents/topMenu/TopMenu';
 
 export default function App() {
   const [habits, setHabits] = useState([]);
@@ -29,9 +28,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.blob}>
-        <Blob width={"100%"} height={"700"}/>
-      </View>
+      <TopMenu/>
       <WeekHabits habits={habits} setHabits={setHabits}/>
     </View>
   );
@@ -44,11 +41,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  blob: {
-    position: 'absolute',
-    left: 0,
-    top: -20,
-    right: 0,
-    bottom: 0,
-  }
 });
