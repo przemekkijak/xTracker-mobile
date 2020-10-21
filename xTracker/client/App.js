@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <TopMenu setPeriod={setPeriod} period={displayPeriod}/>
+      <TopMenu setPeriod={setPeriod} habits={habits}/>
       {displayHabits(displayPeriod)}
     </View>
   );
