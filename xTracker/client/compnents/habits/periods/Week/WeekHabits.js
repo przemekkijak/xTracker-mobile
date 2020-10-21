@@ -66,6 +66,7 @@ const WeekHabits = ({habits, setHabits}) => {
 
 const styles = StyleSheet.create({
     container: {
+        top: 250,
         width: '90%',
     },  
     habitContainer: {

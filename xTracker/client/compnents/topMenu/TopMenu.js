@@ -4,13 +4,35 @@ import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 import Blob from '../../assets/Blob.svg';
 
-const TopMenu = () => {
+const TopMenu = ({setPeriod, period}) => {
+
+    // Create buttons group with each period to set
+    const generatePeriods = () => {
+        var periods = [
+            {"duration":7, "name":"Week"},
+            {"duration":30, "name":"Month"},
+            {"duration":365, "name":"Year"},
+            {"duration":999, "name":"All time"},
+        ]
+        let periodsArr = [];
+        for(let i = 0; i<periods.length; i++) {
+            periodsArr.push(
+            <TouchableOpacity onPress={() => setPeriod(periods[i].duration)} key={i}>
+                <View style={styles.periodElement}>
+                    <Text style={styles.periodText}>{periods[i].name}</Text>
+                </View>
+            </TouchableOpacity>);
+        }
+        return periodsArr;
+    }
 
     return( 
         <View style={styles.topContainer}>
-            <TouchableOpacity style={styles.buttonContainer}>
-                <Text style={styles.buttonText}>Add</Text>
-            </TouchableOpacity>
+            <Text style={styles.welcomeUser}>Hi, Przemek!</Text>
+            <View style={styles.periodContainer}>
+                {generatePeriods()}
+            </View>
+            <TouchableOpacity style={styles.buttonContainer}><Text style={styles.buttonText}>Add</Text></TouchableOpacity>
             <Blob style={styles.blob}/>
         </View>
     )
@@ -18,10 +40,18 @@ const TopMenu = () => {
 
 const styles = StyleSheet.create({
     topContainer: {
+        position: 'absolute',
         top: -20,
         width: '100%',
         height: '50%',
         borderColor: '#000',
+    },
+    welcomeUser: {
+        color: '#FFF',
+        position: 'absolute',
+        top: '23%',
+        left: '8%',
+        fontSize: RFPercentage(4),
     },
     buttonContainer: {
         position: 'absolute',
@@ -39,6 +69,31 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: RFPercentage(2.5),
+    },
+    periodContainer: {
+        position: 'absolute',
+        top: '60%',
+        left: '8%',
+        width: '45%',
+        height: '10%',
+        borderRadius: 30,
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
+        backgroundColor: '#F8F8F8',
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+    periodElement: {
+        height: '100%',
+        margin: '1%',
+    },
+    periodText: {
+        top: '35%',
+        textAlign: 'center',
+        color: '#515151',
+        fontWeight: 'bold',
+        fontSize: RFPercentage(1.6),
     },
     blob: {
         zIndex: -3,

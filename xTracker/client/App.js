@@ -8,6 +8,7 @@ import TopMenu from './compnents/topMenu/TopMenu';
 export default function App() {
   const [habits, setHabits] = useState([]);
   const [user, setUser] = useState({id: "5f786aef04f18a02e4e8e06e"});
+  const [displayPeriod, setPeriod] = useState(7);
 
   useEffect(() => {
 
@@ -26,10 +27,21 @@ export default function App() {
     }
   }, [user]);
 
+  function displayHabits(period) {
+    switch(period) {
+      case 7:
+        return <WeekHabits habits={habits} setHabits={setHabits}/>;
+      case 30: 
+        return <Text>test</Text>
+      case 365:
+        return <Text>year</Text>
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <TopMenu/>
-      <WeekHabits habits={habits} setHabits={setHabits}/>
+      <TopMenu setPeriod={setPeriod} period={displayPeriod}/>
+      {displayHabits(displayPeriod)}
     </View>
   );
 }
