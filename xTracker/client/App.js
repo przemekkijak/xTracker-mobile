@@ -4,11 +4,13 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 // components
 import WeekHabits from './compnents/habits/periods/Week/WeekHabits.js';
 import TopMenu from './compnents/topMenu/TopMenu';
+import AddHabit from './compnents/topMenu/AddHabit';
 
 export default function App() {
   const [habits, setHabits] = useState([]);
   const [user, setUser] = useState({id: "5f786aef04f18a02e4e8e06e"});
   const [displayPeriod, setPeriod] = useState(7);
+  const [addHabitView, showAddHabit] = useState(false);
 
   useEffect(() => {
 
@@ -32,15 +34,16 @@ export default function App() {
       case 7:
         return <WeekHabits habits={habits} setHabits={setHabits}/>;
       case 30: 
-        return <Text>test</Text>
+        return <Text>test</Text>;
       case 365:
-        return <Text>year</Text>
+        return <Text>year</Text>;
     }
   }
 
   return (
     <View style={styles.container}>
-      <TopMenu setPeriod={setPeriod} habits={habits}/>
+      {addHabitView && <AddHabit showAddHabit={showAddHabit}/>}
+      <TopMenu setPeriod={setPeriod} habits={habits} showAddHabit={showAddHabit} addHabitView={addHabitView}/>
       {displayHabits(displayPeriod)}
     </View>
   );

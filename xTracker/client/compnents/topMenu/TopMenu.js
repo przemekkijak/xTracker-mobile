@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
+import AddHabit from './AddHabit';
 import WeeklyProgress from './WeeklyProgress';
 
 import Blob from '../../assets/Blob.svg';
 
-const TopMenu = ({setPeriod, habits}) => {
+const TopMenu = ({setPeriod, habits, showAddHabit, addHabitView}) => {
 
     // Create buttons group with each period to set
     const generatePeriods = () => {
@@ -35,7 +36,10 @@ const TopMenu = ({setPeriod, habits}) => {
             <View style={styles.periodContainer}>
                 {generatePeriods()}
             </View>
-            <TouchableOpacity style={styles.buttonContainer}><Text style={styles.buttonText}>Add</Text></TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.buttonContainer}
+                onPress={() => showAddHabit(!addHabitView)}>
+                    <Text style={styles.buttonText}>Add</Text></TouchableOpacity>
             <Blob style={styles.blob}/>
         </View>
     )

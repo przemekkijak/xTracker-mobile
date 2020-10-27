@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import * as Progress from 'react-native-progress';
 
 
 const WeeklyProgress = ({habits}) => {
@@ -24,20 +23,11 @@ const WeeklyProgress = ({habits}) => {
             }
         })
         success = success/(habits.length*5);
-        console.log(success);
         setProgress(success);
     }, [habits])
     return(
         <View style={styles.weeklyProgress}>
             <Text style={styles.progressHeader}>This week</Text>
-            <Progress.Bar
-            progress={progress}
-            width={100}
-            height={12}
-            borderRadius={30}
-            color={'#DF6367'}
-            unfilledColor={'#DFDBDB'}
-            borderWidth={0}/>
             <Text style={styles.percentage}>{progress*100}%</Text>
         </View>
     )
@@ -46,8 +36,8 @@ const WeeklyProgress = ({habits}) => {
 const styles = StyleSheet.create({
     weeklyProgress: {
         position: 'absolute',
-        top: '85%',
-        left: '15%',
+        top: '82%',
+        left: '10%',
     },
     progressHeader: {
         marginBottom: '5%',
