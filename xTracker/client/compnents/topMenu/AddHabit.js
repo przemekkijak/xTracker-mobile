@@ -1,10 +1,36 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, Dimensions, TouchableOpacity, TextInput, ButtonGroup} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, TextInput, Button} from 'react-native';
 
 
 const AddHabit = ({showAddHabit}) => {
     const [selectedColor, selectColor] = useState();
+    const [nameInput, setNameInput] = useState();
+    const [durationInput, setDurationInput] = useState();
 
+    const addHabit = () => {
+            fetch('http://192.168.0.227:2999/habits/createHabit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: JSON.stringify({
+                    name: nameInput,
+                    duration: durationInput,
+                    creatorID: '5f786aef04f18a02e4e8e06e',
+                    color: selectedColor,
+                }),
+            })
+            .then((res) => res.json())
+            .then((encoded) => {
+                if(encoded.success == true) {
+                    showAddHabit(false);
+                }
+            })
+            .catch((error) => console.log(error));
+        }
+
+    // display 5 colored dots to choose which color you want for your habbit
     const displayColorPicker = () => {
         var colors = ['#D82121', '#2C82D2', '#80E21D', '#DD1FA8', '#F8FC2B'];
         let colorsElements = [];
@@ -23,20 +49,17 @@ const AddHabit = ({showAddHabit}) => {
 
    return(
            <View style={styles.formContainer}>
-            <TouchableOpacity onPress={() => showAddHabit(false)}>
+                <TouchableOpacity onPress={() => showAddHabit(false)}>
                     <Text style={styles.closeButton}>x</Text>
-            </TouchableOpacity>
-            {/* <Text style={styles.title}>Add Habit</Text> */}
-            <TextInput style={[styles.dataInput, styles.name]} placeholder= "Name"/>
-            <TextInput style={[styles.dataInput, styles.duration]} placeholder="Duration" keyboardType='number-pad'/>
-            <View style={styles.colorsContainer}>
-                {displayColorPicker()}
-            </View>
-            <TouchableOpacity>
-                <View style={styles.createButton}>
-                    <Text style={{color: 'white', textAlign: 'center', fontWeight: 'bold'}}>Create</Text>
+                </TouchableOpacity>
+                <TextInput style={[styles.dataInput, styles.name]} placeholder= "Name" onChangeText={input => setNameInput(input)}/>
+                <TextInput style={[styles.dataInput, styles.duration]} placeholder="Duration" keyboardType='number-pad' onChangeText={input => setDurationInput(input)}/>
+                <View style={styles.colorsContainer}>
+                    {displayColorPicker()}
                 </View>
-            </TouchableOpacity>
+                <View style={styles.createButton}>
+                    <Button onPress={() => addHabit()} title="Create"/>
+                </View>
            </View>
    )
 }
@@ -80,7 +103,7 @@ const styles = StyleSheet.create({
         width: '50%',
     },
     duration: {
-        top: '24%',
+        top: '22%',
         width: '35%',
         left: '32%',
     },
@@ -103,14 +126,7 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0,0,0,0.8)',
     },
     createButton: {
-        top: '140%',
-        left: '30%',
-        width: '40%',
-        height: '30%',
-        backgroundColor: '#DF6367',
-        justifyContent: 'center',
-        borderRadius: 50,
-
+        top: '40%',
     }
 })
 
