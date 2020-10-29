@@ -83,10 +83,13 @@ updateHabit = async (req, res) => {
 getHabits = async(req, res) => {
     await Habit.find({creatorID: req.body.userID}, (err, habits) => {
         if (err) {
-            return res.status(200).json({success: false, error: err})
+            return res.status(200).json({success: false, error: err});
+        }
+        if(!req.body.userID) {
+            return res.status(200).json({success: false, error: 'You have to provide creator ID'});
         }
         if(!habits.length) {
-            return res.status(200).json({success: false, error: 'Habits not found'})
+            return res.status(200).json({success: false, error: 'Habits not found'});
         }
         return res.status(200).json({ success: true, habits: habits})
     }).catch(err => console.log('Blad' + error));

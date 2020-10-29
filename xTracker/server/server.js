@@ -18,5 +18,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 app.use('/habits', habitRouter);
 app.use('/users', userRouter);
+app.get('/test', () => {
+    console.log('test udnay');
+})
 
 app.listen(apiPort, () => {console.log(`Server running on ${apiPort}`)});
