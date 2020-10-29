@@ -8,7 +8,7 @@ import AddHabit from './compnents/topMenu/AddHabit';
 
 export default function App() {
   const [habits, setHabits] = useState([]);
-  const [user, setUser] = useState({id: "5f786aef04f18a02e4e8e06eX"});
+  const [user, setUser] = useState({id: "5f786aef04f18a02e4e8e06e"});
   const [displayPeriod, setPeriod] = useState(7);
   const [addHabitView, showAddHabit] = useState(false);
 
