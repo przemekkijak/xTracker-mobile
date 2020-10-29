@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     container: {
         top: 250,
         width: '90%',
+        height: '50%',
     },  
     habitContainer: {
         top: 10,
