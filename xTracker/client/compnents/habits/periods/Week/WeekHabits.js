@@ -6,16 +6,14 @@ import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 // redux actions
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {completeHabit} from '../../../../redux/actions/index';
+import {completeHabit, undoHabit} from '../../../../redux/actions/index';
 
 import GenerateWeek from './GenerateWeek.js';
 import Check from '../../../../assets/Check.svg';
 
-const WeekHabits = ({habits, setHabits}) => {
+const WeekHabits = ({habits, completeHabit}) => {
 
     const CompleteHabit = (habit, index) => {
-        console.log(habit._id);
-        console.log(index);
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
             method: 'PUT',
             headers: {
@@ -30,7 +28,7 @@ const WeekHabits = ({habits, setHabits}) => {
                 if(res.habit === "done") {
                     completeHabit({habitId: habit._id, todayDate: todayDate})
                 } else if(res.habit === "undo") {
-                    console.log('undo habit');
+                    undoHabit({habitId: habit._id});
                 }
         })
         .catch((error) => console.log(error));    
@@ -39,7 +37,6 @@ const WeekHabits = ({habits, setHabits}) => {
     // Create Habit Row in week list, with circle progress bar, name and week progress (separated component)
     const generateHabits = () => {
         let habitsElements = [];
-        if(habits.length) {
             for(let i = 0; i<habits.length; i++) {
                 let habitProgress = (habits[i].progress.length / habits[i].duration) * 100;
                 habitsElements.push(
@@ -56,17 +53,17 @@ const WeekHabits = ({habits, setHabits}) => {
                         </TouchableOpacity>
                     </View>
                 )
-            }
         }
     return habitsElements;
     } 
 
-
-    return (
-        <View style={styles.container}>
-            {generateHabits()}
-        </View>
-    )
+        return(
+            <View style={styles.container}>
+                {habits 
+                ? generateHabits()
+                : <Text>ladowanie</Text>}
+            </View>
+        )
 }
 
 const styles = StyleSheet.create({

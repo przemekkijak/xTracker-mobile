@@ -18,7 +18,6 @@ const App = () => {
   const [addHabitView, showAddHabit] = useState(false);
 
   useEffect(() => {
-    store.subscribe(() => console.log('redux dispatch action'));
 
     if(user.id) {
       fetch('http://192.168.0.227:2999/habits/getHabits', {
@@ -41,7 +40,7 @@ const App = () => {
   function displayHabits(period) {
     switch(period) {
       case 7:
-        return <WeekHabits setHabits={setHabits}/>;
+        return <WeekHabits/>;
       case 30: 
         return <Text>test</Text>;
       case 365:

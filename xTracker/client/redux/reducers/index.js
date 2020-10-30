@@ -1,4 +1,4 @@
-import {ADD_HABIT, COMPLETE_HABIT} from '../const/action-types';
+import {ADD_HABIT, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
 
 const initialState = {
     habits: [],
@@ -14,15 +14,33 @@ const rootReducer = (state = initialState, action) => {
                 habits: state.habits.concat(action.payload)
             });
         case COMPLETE_HABIT:
-            return state.map((habit, index) => {
+            const tempCompleteHabits = state.habits.map((habit) => {
                 if(habit._id === action.payload.habitId) {
-                    return {
-                        ...habit,
-                        progress: progress.concat(action.payload.todayDate)
-                    }
-                }
-            return habit;
+                    return Object.assign({}, habit, {
+                        progress: habit.progress.concat(action.payload.todayDate)
+                    });
+                } else {
+                    return habit;
+                };
             });
+            return {
+                ...state,
+                habits: tempCompleteHabits,
+            };
+        case UNDO_HABIT:
+            const tempUndoHabits = state.habits.map((habit) => {
+                if(habit._id === action.payload.habitId) {
+                    return Object.assign({}, habit, {
+                        progress: habit.progress.slice(0, -1),
+                    });
+                } else {
+                    return habit;
+                }
+            });
+            return {
+                ...state,
+                habits: tempUndoHabits,
+            };
     }
     return state;
 }
