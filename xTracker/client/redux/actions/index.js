@@ -1,5 +1,5 @@
 
-import {ADD_HABIT} from '../const/action-types.js';
+import {ADD_HABIT, COMPLETE_HABIT} from '../const/action-types.js';
 
 export function addHabit(payload) {
     return {
@@ -7,3 +7,10 @@ export function addHabit(payload) {
         payload,
     }
 };
+
+export function completeHabit(payload) {
+    return {
+        type: COMPLETE_HABIT,
+        payload,
+    }
+}

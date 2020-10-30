@@ -41,7 +41,7 @@ const App = () => {
   function displayHabits(period) {
     switch(period) {
       case 7:
-        return <WeekHabits habits={habits} setHabits={setHabits}/>;
+        return <WeekHabits setHabits={setHabits}/>;
       case 30: 
         return <Text>test</Text>;
       case 365:
@@ -54,7 +54,6 @@ const App = () => {
       <View style={styles.container}>
         {addHabitView && <AddHabit showAddHabit={showAddHabit}/>}
         <TopMenu setPeriod={setPeriod} showAddHabit={showAddHabit} addHabitView={addHabitView}/>
-        <Button onPress={() => store.dispatch(addHabit({name: 'Test redux', duration: 3, progress: []}))} title="test"/>
         {displayHabits(displayPeriod)}
       </View>
     </Provider>

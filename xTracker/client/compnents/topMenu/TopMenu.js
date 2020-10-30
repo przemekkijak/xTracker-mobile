@@ -36,9 +36,6 @@ const TopMenu = ({setPeriod, showAddHabit, addHabitView, habits}) => {
             <WeeklyProgress habits={habits}/>
             <View style={styles.periodContainer}>
                 {generatePeriods()}
-                <Button title="test store" onPress={() => {
-                    console.log(habits);    
-                }}/>
             </View>
             <TouchableOpacity 
                 style={styles.buttonContainer}

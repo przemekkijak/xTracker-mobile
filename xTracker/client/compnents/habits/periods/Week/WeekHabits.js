@@ -3,12 +3,19 @@ import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
+// redux actions
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {completeHabit} from '../../../../redux/actions/index';
+
 import GenerateWeek from './GenerateWeek.js';
 import Check from '../../../../assets/Check.svg';
 
 const WeekHabits = ({habits, setHabits}) => {
 
     const CompleteHabit = (habit, index) => {
+        console.log(habit._id);
+        console.log(index);
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
             method: 'PUT',
             headers: {
@@ -20,13 +27,11 @@ const WeekHabits = ({habits, setHabits}) => {
         .then((res) => res.json())
         .then((res) => {
                 let todayDate = new Date().toISOString().split('T')[0];
-                let tempHabits = [...habits];
                 if(res.habit === "done") {
-                    tempHabits[index].progress.push(todayDate);
+                    completeHabit({habitId: habit._id, todayDate: todayDate})
                 } else if(res.habit === "undo") {
-                    tempHabits[index].progress.pop();
+                    console.log('undo habit');
                 }
-                setHabits(tempHabits);
         })
         .catch((error) => console.log(error));    
     }
@@ -108,4 +113,15 @@ const styles = StyleSheet.create({
     },
 })
 
-export default WeekHabits;
+const mapStateToProps = (state) => {
+    const {habits} = state;
+    return {habits};
+}
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+      completeHabit,
+    }, dispatch)
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeekHabits);
