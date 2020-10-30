@@ -3,7 +3,7 @@ import {Text, StyleSheet, View} from 'react-native';
 
 
 const WeeklyProgress = ({habits}) => {
-    const [progress, setProgress] = useState(0.0);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         // create array with 5 last days 
@@ -28,7 +28,7 @@ const WeeklyProgress = ({habits}) => {
     return(
         <View style={styles.weeklyProgress}>
             <Text style={styles.progressHeader}>This week</Text>
-            <Text style={styles.percentage}>{progress*100}%</Text>
+            <Text style={styles.percentage}>{Math.round(progress*100)}%</Text>
         </View>
     )
 }
