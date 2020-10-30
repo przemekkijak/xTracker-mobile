@@ -1,7 +1,7 @@
 
-import {ADD_HABIT} from '../actions/action-types';
+import {ADD_HABIT} from '../const/action-types.js';
 
-export function incrementNumber(payload) {
+export function addHabit(payload) {
     return {
         type: ADD_HABIT,
         payload,
