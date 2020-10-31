@@ -8,39 +8,40 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case FETCH_HABITS:
-            return Object.assign({}, state, {
-                habits: state.habits.concat(action.payload)
-            });
-        case COMPLETE_HABIT:
-            const tempCompleteHabits = state.habits.map((habit) => {
-                if(habit._id === action.payload.habitId) {
-                    return Object.assign({}, habit, {
-                        progress: habit.progress.concat(action.payload.todayDate)
-                    });
-                } else {
-                    return habit;
-                };
-            });
-            return {
-                ...state,
-                habits: tempCompleteHabits,
+    if(action.type === FETCH_HABITS) {
+        return Object.assign({}, state, {
+            habits: state.habits.concat(action.payload)
+        });
+    };
+    if(action.type === COMPLETE_HABIT) {
+        const tempCompleteHabits = state.habits.map((habit) => {
+            if(habit._id === action.payload.habitId) {
+                return Object.assign({}, habit, {
+                    progress: habit.progress.concat(action.payload.todayDate)
+                });
+            } else {
+            return habit;
             };
-        case UNDO_HABIT:
-            const tempUndoHabits = state.habits.map((habit) => {
-                if(habit._id === action.payload.habitId) {
-                    return Object.assign({}, habit, {
-                        progress: habit.progress.slice(0, -1),
-                    })
-                }
-                return habit;
-            })
-            return {
-                ...state,
-                habits: tempUndoHabits,
-            }
-    }
+        });
+        return {
+            ...state,
+            habits: tempCompleteHabits,
+        }
+    };
+    if(action.type === UNDO_HABIT) {
+        const tempUndoHabits = state.habits.map((habit) => {
+            if(habit._id === action.payload.habitId) {
+                return Object.assign({}, habit, {
+                    progress: habit.progress.slice(0, -1),
+                })
+            };
+            return habit;
+        })
+        return {
+            ...state,
+            habits: tempUndoHabits,
+        };
+    };
     return state;
 }
 
