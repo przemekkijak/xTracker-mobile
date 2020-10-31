@@ -14,7 +14,7 @@ const rootReducer = (state = initialState, action) => {
         });
     };
     if(action.type === COMPLETE_HABIT) {
-        const tempCompleteHabits = state.habits.map((habit) => {
+        const tempHabits = state.habits.map((habit) => {
             if(habit._id === action.payload.habitId) {
                 return Object.assign({}, habit, {
                     progress: habit.progress.concat(action.payload.todayDate)
@@ -25,11 +25,11 @@ const rootReducer = (state = initialState, action) => {
         });
         return {
             ...state,
-            habits: tempCompleteHabits,
+            habits: tempHabits,
         }
     };
     if(action.type === UNDO_HABIT) {
-        const tempUndoHabits = state.habits.map((habit) => {
+        let tempHabits = state.habits.map((habit) => {
             if(habit._id === action.payload.habitId) {
                 return Object.assign({}, habit, {
                     progress: habit.progress.slice(0, -1),
@@ -39,7 +39,7 @@ const rootReducer = (state = initialState, action) => {
         })
         return {
             ...state,
-            habits: tempUndoHabits,
+            habits: tempHabits,
         };
     };
     return state;
