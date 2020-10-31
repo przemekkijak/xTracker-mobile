@@ -11,7 +11,7 @@ import {completeHabit, undoHabit} from '../../../../redux/actions/index';
 import GenerateWeek from './GenerateWeek.js';
 import Check from '../../../../assets/Check.svg';
 
-const WeekHabits = ({habits, completeHabit}) => {
+const WeekHabits = ({habits, completeHabit, undoHabit}) => {
 
     const CompleteHabit = (habit, index) => {
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
@@ -26,8 +26,8 @@ const WeekHabits = ({habits, completeHabit}) => {
         .then((res) => {
                 let todayDate = new Date().toISOString().split('T')[0];
                 if(res.habit === "done") {
-                    completeHabit({habitId: habit._id, todayDate: todayDate})
-                } else if(res.habit === "undo") {
+                    completeHabit({habitId: habit._id, todayDate: todayDate});
+                } else if(res.habit === "undo") {   
                     undoHabit({habitId: habit._id});
                 }
         })
@@ -118,6 +118,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
       completeHabit,
+      undoHabit
     }, dispatch)
   );
 

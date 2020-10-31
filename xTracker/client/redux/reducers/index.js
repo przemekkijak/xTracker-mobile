@@ -1,4 +1,4 @@
-import {ADD_HABIT, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
+import {FETCH_HABITS, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
 
 const initialState = {
     habits: [],
@@ -9,7 +9,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type) {
-        case ADD_HABIT:
+        case FETCH_HABITS:
             return Object.assign({}, state, {
                 habits: state.habits.concat(action.payload)
             });
@@ -32,15 +32,14 @@ const rootReducer = (state = initialState, action) => {
                 if(habit._id === action.payload.habitId) {
                     return Object.assign({}, habit, {
                         progress: habit.progress.slice(0, -1),
-                    });
-                } else {
-                    return habit;
+                    })
                 }
-            });
+                return habit;
+            })
             return {
                 ...state,
                 habits: tempUndoHabits,
-            };
+            }
     }
     return state;
 }

@@ -1,3 +1,3 @@
-export const ADD_HABIT = "ADD_HABIT";
+export const FETCH_HABITS = "FETCH_HABITS";
 export const COMPLETE_HABIT = "COMPLETE_HABIT";
 export const UNDO_HABIT = "UNDO_HABIT";

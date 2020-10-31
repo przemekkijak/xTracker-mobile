@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 // redux store
 import {Provider} from 'react-redux'
 import store from './redux/store/index';
-import {addHabit} from './redux/actions/index';
+import {fetchHabits} from './redux/actions/index';
 
 // components
 import WeekHabits from './compnents/habits/periods/Week/WeekHabits.js';
@@ -12,14 +12,12 @@ import TopMenu from './compnents/topMenu/TopMenu';
 import AddHabit from './compnents/topMenu/AddHabit';
 
 const App = () => {
-  const [habits, setHabits] = useState([]);
-  const [user, setUser] = useState({id: "5f786aef04f18a02e4e8e06e"});
   const [displayPeriod, setPeriod] = useState(7);
   const [addHabitView, showAddHabit] = useState(false);
 
   useEffect(() => {
 
-    if(user.id) {
+    if(store.getState().user.id !== undefined) {
       fetch('http://192.168.0.227:2999/habits/getHabits', {
         method: 'POST',
         headers: {
@@ -30,12 +28,11 @@ const App = () => {
       })
       .then((res) => res.json())
       .then((encoded) => {
-        setHabits(encoded.habits);
-        store.dispatch(addHabit(encoded.habits));
+        store.dispatch(fetchHabits(encoded.habits));
       })
       .catch((error) => console.log(error));
     }
-  }, [user]);
+  }, [store.getState().user.id]);
 
   function displayHabits(period) {
     switch(period) {
