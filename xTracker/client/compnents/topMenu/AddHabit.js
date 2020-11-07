@@ -10,7 +10,16 @@ const AddHabit = ({showAddHabit, addHabits}) => {
     const [nameInput, setNameInput] = useState();
     const [durationInput, setDurationInput] = useState();
 
-    const backendAddHabit = () => {
+    const AddHabit = () => {
+        if(!nameInput) {
+            alert('You have to enter name for habit');
+        }
+        else if(!durationInput) {
+            alert('You have to set duration')
+        }
+        else if(!selectedColor) {
+            alert('Pick color for your habit');
+        } else {
             fetch('http://192.168.0.227:2999/habits/createHabit', {
                 method: 'POST',
                 headers: {
@@ -25,14 +34,15 @@ const AddHabit = ({showAddHabit, addHabits}) => {
                 }),
             })
             .then((res) => res.json())
-            .then((encoded) => {
-                if(encoded.success == true) {
-                    addHabits(encoded.habit);
+            .then((data) => {
+                if(data.success == true) {
+                    addHabits(data.habit);
                     showAddHabit(false);
                 }
             })
             .catch((error) => console.log(error));
         }
+    }
 
     // display 5 colored dots to choose which color you want for your habbit
     const displayColorPicker = () => {
@@ -69,7 +79,7 @@ const AddHabit = ({showAddHabit, addHabits}) => {
                         <View style={styles.colorsContainer}>
                             {displayColorPicker()}
                         </View>
-                        <TouchableOpacity style={styles.createButton} onPress={() => backendAddHabit()}>
+                        <TouchableOpacity style={styles.createButton} onPress={() => AddHabit()}>
                             <Text style={styles.buttonText}>Create</Text>
                         </TouchableOpacity>
                     </View>
