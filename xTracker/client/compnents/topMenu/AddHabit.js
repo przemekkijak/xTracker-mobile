@@ -90,8 +90,7 @@ const AddHabit = ({showAddHabit, addHabits}) => {
 
 const styles = StyleSheet.create({
     formContainer: {
-        zIndex: 3,
-        opacity: 1,
+        zIndex: 1,
         position: 'absolute',
         width: '100%',
         height: '100%',

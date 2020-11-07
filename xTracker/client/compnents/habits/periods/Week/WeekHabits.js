@@ -1,17 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
 // redux actions
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {completeHabit, undoHabit} from '../../../../redux/actions/index';
+import {completeHabit, undoHabit, habitInfo} from '../../../../redux/actions/index';
 
 import GenerateWeek from './GenerateWeek.js';
 import Check from '../../../../assets/Check.svg';
 
-const WeekHabits = ({habits, completeHabit, undoHabit}) => {
+const WeekHabits = ({habits, completeHabit, undoHabit, habitInfo}) => {
 
     const CompleteHabit = (habit, index) => {
         fetch('http://192.168.0.227:2999/habits/completeHabit', {
@@ -42,7 +41,9 @@ const WeekHabits = ({habits, completeHabit, undoHabit}) => {
                 habitsElements.push(
                     <View style={styles.habitContainer} key={habits[i]._id}>
                         <AnimatedCircularProgress style={styles.circleProgress} size={27} width={6} fill={habitProgress} tintColor={habits[i].color} backgroundColor="#DFDCDC"/>
-                        <TouchableOpacity style={{left: '40%', flex: 2}} onPress={() => alert(habits[i].name)}>
+                        <TouchableOpacity style={{left: '40%', flex: 2}} onPress={() => {
+                            habitInfo({habitInfoId: habits[i]._id});
+                            }}>
                         <Text style={{fontWeight: 'bold', textAlign: 'left', color: '#4B6773'}}>{habits[i].name}</Text>
                         </TouchableOpacity>
                         <View style={styles.weekdaysContainer}>
@@ -115,7 +116,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
       completeHabit,
-      undoHabit
+      undoHabit,
+      habitInfo
     }, dispatch)
   );
 

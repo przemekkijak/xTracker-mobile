@@ -1,5 +1,5 @@
 
-import {ADD_HABITS, COMPLETE_HABIT, RELOAD_HABITS, UNDO_HABIT} from '../const/action-types.js';
+import {ADD_HABITS, COMPLETE_HABIT, UNDO_HABIT, HABIT_INFO} from '../const/action-types.js';
 
 export function addHabits(payload) {
     return {
@@ -22,9 +22,9 @@ export function undoHabit(payload) {
     }
 }
 
-export function reloadHabits(payload) {
+export function habitInfo(payload) {
     return {
-        type: RELOAD_HABITS,
+        type: HABIT_INFO,
         payload,
     }
 }

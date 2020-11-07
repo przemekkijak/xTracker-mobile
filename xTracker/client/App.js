@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Button, Alert} from 'react-native';
 
 // redux store
 import {Provider} from 'react-redux'
@@ -11,12 +11,11 @@ import WeekHabits from './compnents/habits/periods/Week/WeekHabits.js';
 import TopMenu from './compnents/topMenu/TopMenu';
 import AddHabit from './compnents/topMenu/AddHabit';
 
-const App = () => {
+const App = ({habitInfoId}) => {
   const [displayPeriod, setPeriod] = useState(7);
   const [addHabitView, showAddHabit] = useState(false);
 
   useEffect(() => {
-
     if(store.getState().user.id !== undefined) {
       fetch('http://192.168.0.227:2999/habits/getHabits', {
         method: 'POST',
@@ -64,5 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
 
 export default App;

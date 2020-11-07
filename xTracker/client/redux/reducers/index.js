@@ -1,7 +1,8 @@
-import {ADD_HABITS, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
+import {ADD_HABITS, COMPLETE_HABIT, UNDO_HABIT, HABIT_INFO} from '../const/action-types';
 
 const initialState = {
     habits: [],
+    habitInfoId: null,
     user: {
         id: "5f786aef04f18a02e4e8e06e",
     },
@@ -42,6 +43,9 @@ const rootReducer = (state = initialState, action) => {
             habits: tempHabits,
         };
     };
+    if(action.type === HABIT_INFO) {
+        return Object.assign({}, state, action.payload);
+    }
     return state;
 }
 
