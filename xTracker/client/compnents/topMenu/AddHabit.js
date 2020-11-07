@@ -27,7 +27,7 @@ const AddHabit = ({showAddHabit, addHabits}) => {
             .then((res) => res.json())
             .then((encoded) => {
                 if(encoded.success == true) {
-                    console.log(encoded.habit);
+                    addHabits(encoded.habit);
                     showAddHabit(false);
                 }
             })
@@ -181,4 +181,4 @@ const mapDispatchToProps = dispatch => (
     }, dispatch)
 );
 
-export default connect(mapDispatchToProps)(AddHabit);
+export default connect(null, mapDispatchToProps)(AddHabit);
