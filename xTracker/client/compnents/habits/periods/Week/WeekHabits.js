@@ -42,7 +42,9 @@ const WeekHabits = ({habits, completeHabit, undoHabit}) => {
                 habitsElements.push(
                     <View style={styles.habitContainer} key={habits[i]._id}>
                         <AnimatedCircularProgress style={styles.circleProgress} size={27} width={6} fill={habitProgress} tintColor={habits[i].color} backgroundColor="#DFDCDC"/>
-                        <Text style={styles.habitName}>{habits[i].name}</Text>
+                        <TouchableOpacity style={{left: '40%', flex: 2}} onPress={() => alert(habits[i].name)}>
+                        <Text style={{fontWeight: 'bold', textAlign: 'left', color: '#4B6773'}}>{habits[i].name}</Text>
+                        </TouchableOpacity>
                         <View style={styles.weekdaysContainer}>
                             <GenerateWeek habit={habits[i]}/>
                         </View>
@@ -91,14 +93,6 @@ const styles = StyleSheet.create({
     },
     circleProgress: {
         marginLeft: 15,
-    },
-    habitName: {
-        color: '#4B6773',
-        flex: 2,
-        left: '20%',
-        textAlign: 'left',
-        fontSize: RFPercentage(2),
-        fontWeight: 'bold',
     },
     weekdaysContainer: {
         marginRight: '12%',

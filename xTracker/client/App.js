@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 
 // redux store
 import {Provider} from 'react-redux'
@@ -27,8 +27,8 @@ const App = () => {
         body: JSON.stringify({userID: store.getState().user.id}),
       })
       .then((res) => res.json())
-      .then((encoded) => {
-        store.dispatch(addHabits(encoded.habits));
+      .then((data) => {
+        store.dispatch(addHabits(data.habits));
       })
       .catch((error) => console.log(error));
     }
