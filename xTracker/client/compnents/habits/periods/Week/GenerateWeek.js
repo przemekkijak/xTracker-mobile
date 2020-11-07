@@ -8,9 +8,9 @@ const GenerateWeek = ({habit}) => {
             var today = new Date();
             today.setDate(today.getDate()-i);
             if(habit.progress.includes(today.toISOString().split('T')[0])) {
-                weekDays.push(<Text key={i} style={[styles.weekday, {color: habit.color}]}>✓</Text>);
+                weekDays.push(<Text key={i} style={[styles.weekday, {color: '#DF6367'}]}>✓</Text>);
             } else {
-                weekDays.push(<Text key={i} style={[styles.weekday,  {color: "#BDBDBD"}]}>x</Text>)
+                weekDays.push(<Text key={i} style={[styles.weekday,  {color: '#BDBDBD'}]}>x</Text>)
             }
         }
         return weekDays;

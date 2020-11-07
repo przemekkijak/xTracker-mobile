@@ -1,4 +1,4 @@
-import {FETCH_HABITS, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
+import {ADD_HABITS, COMPLETE_HABIT, UNDO_HABIT} from '../const/action-types';
 
 const initialState = {
     habits: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, action) => {
-    if(action.type === FETCH_HABITS) {
+    if(action.type === ADD_HABITS) {
         return Object.assign({}, state, {
             habits: state.habits.concat(action.payload)
         });

@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, TextInput, Button} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, TextInput, Button, Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {addHabits} from '../../redux/actions/index';
 
 
-const AddHabit = ({showAddHabit}) => {
+const AddHabit = ({showAddHabit, addHabits}) => {
     const [selectedColor, selectColor] = useState();
     const [nameInput, setNameInput] = useState();
     const [durationInput, setDurationInput] = useState();
 
-    const addHabit = () => {
+    const backendAddHabit = () => {
             fetch('http://192.168.0.227:2999/habits/createHabit', {
                 method: 'POST',
                 headers: {
@@ -24,6 +27,7 @@ const AddHabit = ({showAddHabit}) => {
             .then((res) => res.json())
             .then((encoded) => {
                 if(encoded.success == true) {
+                    console.log(encoded.habit);
                     showAddHabit(false);
                 }
             })
@@ -48,19 +52,29 @@ const AddHabit = ({showAddHabit}) => {
     }
 
    return(
-           <View style={styles.formContainer}>
-                <TouchableOpacity onPress={() => showAddHabit(false)}>
-                    <Text style={styles.closeButton}>x</Text>
-                </TouchableOpacity>
-                <TextInput style={[styles.dataInput, styles.name]} placeholder= "Name" onChangeText={input => setNameInput(input)}/>
-                <TextInput style={[styles.dataInput, styles.duration]} placeholder="Duration" keyboardType='number-pad' onChangeText={input => setDurationInput(input)}/>
-                <View style={styles.colorsContainer}>
-                    {displayColorPicker()}
-                </View>
-                <View style={styles.createButton}>
-                    <Button onPress={() => addHabit()} title="Create"/>
-                </View>
-           </View>
+       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <View style={styles.formContainer}>
+                    <TouchableOpacity onPress={() => showAddHabit(false)}>
+                        <Text style={styles.closeButton}>x</Text>
+                    </TouchableOpacity>
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.title}>Create Habit</Text>
+                    </View>
+                    <View style={styles.dataInputsContainer}>
+                        <Text style={styles.inputLabel}>Enter your title:</Text>
+                        <TextInput style={[styles.dataInput, styles.name]} onChangeText={input => setNameInput(input)}/>
+                        <Text style={styles.inputLabel}>Duration:</Text>
+                        <TextInput style={[styles.dataInput, styles.duration]} keyboardType='number-pad' onChangeText={input => setDurationInput(input)}/>
+                        <Text style={styles.inputLabel}>Pick your color:</Text>
+                        <View style={styles.colorsContainer}>
+                            {displayColorPicker()}
+                        </View>
+                        <TouchableOpacity style={styles.createButton} onPress={() => backendAddHabit()}>
+                            <Text style={styles.buttonText}>Create</Text>
+                        </TouchableOpacity>
+                    </View>
+            </View>
+        </TouchableWithoutFeedback>
    )
 }
 
@@ -69,56 +83,76 @@ const styles = StyleSheet.create({
         zIndex: 3,
         opacity: 1,
         position: 'absolute',
-        width: '60%',
-        height: '40%',
+        width: '100%',
+        height: '100%',
         backgroundColor: '#F5F5F5',
         borderWidth: 1,
         borderColor: 'rgba(0,0,0,0.35)',
-        top: '25%',
-        left: '20%',
     },
     closeButton: {
+        color: '#FFF',
         zIndex: 7,
-        color: 'black',
-        top: '50%',
-        left: '85%',
-        fontSize: 30,
+        top: '130%',
+        left: '90%',
+        fontSize: 35,
     },
+    headerContainer: {
+        zIndex: -1,
+        top: -50,
+        left: -1,
+        width: '101%',
+        backgroundColor: '#1E3B4A',
+        height: '20%',
+        display: 'flex',
+        justifyContent: 'center',
+    },  
     title: {
+        color: '#F5F5F5',
+        top: 40,
         fontWeight: 'bold',
         fontSize: 40,
-        left: '10%',
+        left: '30%',
+    },
+    dataInputsContainer: {
+        top: -50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     dataInput: {
+        textAlign: 'center',
+        fontSize: 23,
+        margin: 20,
         height: '10%',
-        padding: 10,
-        color: '#373737',
-        backgroundColor: '#FFF',
-        borderWidth: 1,
+        color: 'black',
+        backgroundColor: 'transparent',
+        borderBottomWidth: 2,
         borderColor: 'rgba(0,0,0,0.3)',
     },
+    inputLabel: {
+        marginTop: 30,
+        fontSize: 30,
+        fontWeight: 'bold',  
+        color: '#847F7F',
+    },
     name: {
-        top: '15%',
-        left: '25%',
         width: '50%',
     },
     duration: {
-        top: '22%',
         width: '35%',
-        left: '32%',
     },
     colorsContainer: {
+        top: 20,
         width: '100%',
-        top: '50%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
     },
     colorButton: {
         margin: 5,
-        width: 20,
-        height: 20,
-        borderRadius: 50,
+        width: 40,
+        height: 40,
+        borderRadius: 5,
         borderWidth: 2,
         borderColor: 'rgba(0,0,0,0.2)',
     },
@@ -126,8 +160,25 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0,0,0,0.8)',
     },
     createButton: {
-        top: '40%',
+        backgroundColor: '#1E3B4A',
+        width: '40%',
+        height: '8%',
+        borderRadius: 5,
+        top: 70,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontSize: 22,
+        color: '#F5F5F5',
     }
 })
 
-export default AddHabit;
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        addHabits,
+    }, dispatch)
+);
+
+export default connect(mapDispatchToProps)(AddHabit);

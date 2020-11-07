@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
 
@@ -59,18 +59,21 @@ const WeekHabits = ({habits, completeHabit, undoHabit}) => {
 
         return(
             <View style={styles.container}>
-                {habits 
-                ? generateHabits()
-                : <Text>ladowanie</Text>}
+                <ScrollView showsVerticalScrollIndicator={false}> 
+                    {habits 
+                    ? generateHabits()
+                    : <Text>ladowanie</Text>}
+                </ScrollView>
             </View>
         )
 }
 
 const styles = StyleSheet.create({
     container: {
-        top: 250,
+        top: 170,
+        height: '40%',
         width: '90%',
-        height: '50%',
+        paddingTop: 10,
     },  
     habitContainer: {
         top: 10,
@@ -82,8 +85,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         width: '100%',
-        height: '12%',
-        marginTop: '5%',
+        height: 50,
+        marginBottom: '3%',
         padding: 3,
     },
     circleProgress: {

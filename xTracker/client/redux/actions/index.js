@@ -1,9 +1,9 @@
 
-import {FETCH_HABITS, COMPLETE_HABIT, RELOAD_HABITS, UNDO_HABIT} from '../const/action-types.js';
+import {ADD_HABITS, COMPLETE_HABIT, RELOAD_HABITS, UNDO_HABIT} from '../const/action-types.js';
 
-export function fetchHabits(payload) {
+export function addHabits(payload) {
     return {
-        type: FETCH_HABITS,
+        type: ADD_HABITS,
         payload,
     }
 };

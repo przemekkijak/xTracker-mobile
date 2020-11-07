@@ -23,7 +23,7 @@ const habit = new Habit(body);
     .then(() => {
         return res.status(201).json({
             success: true,
-            id: habit._id,
+            habit: habit,
             message: 'Habit created'
         })
     })

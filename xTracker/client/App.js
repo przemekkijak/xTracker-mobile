@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 // redux store
 import {Provider} from 'react-redux'
 import store from './redux/store/index';
-import {fetchHabits} from './redux/actions/index';
+import {addHabits} from './redux/actions/index';
 
 // components
 import WeekHabits from './compnents/habits/periods/Week/WeekHabits.js';
@@ -28,7 +28,7 @@ const App = () => {
       })
       .then((res) => res.json())
       .then((encoded) => {
-        store.dispatch(fetchHabits(encoded.habits));
+        store.dispatch(addHabits(encoded.habits));
       })
       .catch((error) => console.log(error));
     }
